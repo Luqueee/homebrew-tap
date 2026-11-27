@@ -1,8 +1,8 @@
 class Rexpresence < Formula
   desc "Show Rex terminal activity in Discord Rich Presence"
   homepage "https://github.com/Luqueee/rexpresence"
-  url "https://github.com/Luqueee/rexpresence/archive/refs/tags/v0.5.0.tar.gz"
-  sha256 "5b1708914865e20c155c9e263e6fbbfa882a160671e01ec7f90308f796d0ca13"
+  url "https://github.com/Luqueee/rexpresence/archive/refs/tags/v0.6.0.tar.gz"
+  sha256 "b4a107edefeec5e79a40d1ee55316d21275c0832cf598a87b4b1d5feb20fdbdc"
   license "BSD-4-Clause"
 
   depends_on "go" => :build
@@ -14,6 +14,17 @@ class Rexpresence < Formula
     # The GUI does not necessarily inherit Homebrew's PATH. opt_bin survives upgrades.
     inreplace "integrations/rex/rexpresence.lua", 'return home .. "/.local/bin/rexpresence"', "return \"#{opt_bin}/rexpresence\""
     pkgshare.install "integrations/rex/rexpresence.lua"
+  end
+
+  def caveats
+    <<~EOS
+      Open Discord and a terminal in Rex. Check whether sharing is already running:
+        #{opt_bin}/rexpresence status
+      Start sharing in the background (safe to run again):
+        #{opt_bin}/rexpresence -d
+      To add Discord controls to Rex's command palette:
+        #{opt_bin}/rexpresence setup
+    EOS
   end
 
   test do
