@@ -1,8 +1,8 @@
 class Rexpresence < Formula
   desc "Show Rex terminal activity in Discord Rich Presence"
   homepage "https://github.com/Luqueee/rexpresence"
-  url "https://github.com/Luqueee/rexpresence/archive/refs/tags/v0.7.1.tar.gz"
-  sha256 "7d98916541600604b7ebe2b636fbec994c37c81195cea72a61e7a358b08b6896"
+  url "https://github.com/Luqueee/rexpresence/archive/refs/tags/v0.7.2.tar.gz"
+  sha256 "4d5e5ac80b9aed15e6b22a534fb01d0cb290e1b95ea04be941bbafac55010d19"
   license "BSD-4-Clause"
 
   depends_on "go" => :build
