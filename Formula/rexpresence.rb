@@ -1,8 +1,8 @@
 class Rexpresence < Formula
   desc "Show Rex terminal activity in Discord Rich Presence"
   homepage "https://github.com/Luqueee/rexpresence"
-  url "https://github.com/Luqueee/rexpresence/archive/refs/tags/v0.4.1.tar.gz"
-  sha256 "213f7017b34d7b6e56df97b9739d52ebbbad36d92aecb16480f0934905f45cff"
+  url "https://github.com/Luqueee/rexpresence/archive/refs/tags/v0.5.0.tar.gz"
+  sha256 "5b1708914865e20c155c9e263e6fbbfa882a160671e01ec7f90308f796d0ca13"
   license "BSD-4-Clause"
 
   depends_on "go" => :build
@@ -19,6 +19,11 @@ class Rexpresence < Formula
   test do
     ENV["HOME"] = testpath.to_s
     assert_equal "rexpresence v#{version}", shell_output("#{bin}/rexpresence version").strip
+    session = "session:01a10d99-0c06-7795-bf67-798ce4c36a33"
+    system bin/"rexpresence", "group", "hide", session
+    assert_equal "private", shell_output("#{bin}/rexpresence group get #{session}").strip
+    system bin/"rexpresence", "group", "show", session
+    assert_equal "public", shell_output("#{bin}/rexpresence group get #{session}").strip
     system bin/"rexpresence", "pause"
     assert_equal "15", shell_output("#{bin}/rexpresence mode remaining").strip
     system bin/"rexpresence", "resume"
