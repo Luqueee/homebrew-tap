@@ -1,15 +1,16 @@
 class Rexpresence < Formula
   desc "Show Rex terminal activity in Discord Rich Presence"
   homepage "https://github.com/Luqueee/rexpresence"
-  url "https://github.com/Luqueee/rexpresence/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "2343d5f18e6298e4ebc689ba21c4051b92577557f5f8081e7c3faa3cf1e7321c"
+  url "https://github.com/Luqueee/rexpresence/archive/refs/tags/v0.4.1.tar.gz"
+  sha256 "213f7017b34d7b6e56df97b9739d52ebbbad36d92aecb16480f0934905f45cff"
   license "BSD-4-Clause"
 
   depends_on "go" => :build
   depends_on :macos
 
   def install
-    system "go", "build", *std_go_args(ldflags: "-X main.paletteExecutable=#{opt_bin}/rexpresence"), "./cmd/rexpresence"
+    ldflags = "-X main.paletteExecutable=#{opt_bin}/rexpresence -X main.releaseVersion=v#{version}"
+    system "go", "build", *std_go_args(ldflags:), "./cmd/rexpresence"
     # The GUI does not necessarily inherit Homebrew's PATH. opt_bin survives upgrades.
     inreplace "integrations/rex/rexpresence.lua", 'return home .. "/.local/bin/rexpresence"', "return \"#{opt_bin}/rexpresence\""
     pkgshare.install "integrations/rex/rexpresence.lua"
@@ -17,6 +18,7 @@ class Rexpresence < Formula
 
   test do
     ENV["HOME"] = testpath.to_s
+    assert_equal "rexpresence v#{version}", shell_output("#{bin}/rexpresence version").strip
     system bin/"rexpresence", "pause"
     assert_equal "15", shell_output("#{bin}/rexpresence mode remaining").strip
     system bin/"rexpresence", "resume"
