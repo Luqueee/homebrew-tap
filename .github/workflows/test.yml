@@ -1,0 +1,19 @@
+name: Homebrew
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  install:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Install and test the formula
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: '1'
+          HOMEBREW_NO_INSTALL_CLEANUP: '1'
+        run: |
+          brew tap luqueee/tap "$GITHUB_WORKSPACE"
+          brew install luqueee/tap/rexpresence
+          brew test luqueee/tap/rexpresence
